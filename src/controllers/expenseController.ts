@@ -96,7 +96,7 @@ export const createExpense = async (req: Request, res: Response) => {
 
 export const updateExpense = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { description, amount, categoryId, expense_date } = req.body;
+  const { description, amount, category_id, expense_date } = req.body;
   const user = (req as any).user;
   if (
     !description ||
@@ -112,7 +112,7 @@ export const updateExpense = async (req: Request, res: Response) => {
       .status(400)
       .json({ message: "El monto debe ser un número positivo" });
   }
-  if (!categoryId || isNaN(categoryId)) {
+  if (!category_id || isNaN(category_id)) {
     return res
       .status(400)
       .json({ message: "La categoría es obligatoria y debe ser numérica" });
@@ -129,7 +129,7 @@ export const updateExpense = async (req: Request, res: Response) => {
     }
     expense.description = description;
     expense.amount = amount;
-    expense.category_id = categoryId;
+    expense.category_id = category_id;
     expense.expense_date = expense_date;
     await expense.save();
     return res.json({ message: "Gasto actualizado correctamente", expense });
